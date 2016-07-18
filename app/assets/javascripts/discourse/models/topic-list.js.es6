@@ -193,6 +193,7 @@ const TopicList = RestModel.extend({
   },
 
   loadMore() {
+    if (Discourse.get('orig') != 'late') {
     if (this.get('loadingMore')) { return Ember.RSVP.resolve(); }
 
     const moreUrl = this.get('more_topics_url');
@@ -226,6 +227,7 @@ const TopicList = RestModel.extend({
     } else {
       // Return a promise indicating no more results
       return Ember.RSVP.resolve();
+    }
     }
   },
 
