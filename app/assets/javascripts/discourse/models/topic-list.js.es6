@@ -136,14 +136,17 @@ if (result.filter == 'c/pokeriverkot/l/latest') {
     return result.topic_list.topics.map(function (t) {
       
 	    t.category = categories.findBy('id', t.category_id);
-      	    if (Discourse.get('orig') == 'late' && t.category_id != 5) { 
+      if (Discourse.get('orig') == 'late' && t.category_id != 5) { 
               t.arvostelu = undefined;
+		console.log("eka" + Discourse.get("count"));
             } else {
               Discourse.set('count', Discourse.get('count') + 1);
 	      if (Discourse.get("count") < 11) {
               	t.arvostelu = true;
+		console.log("toka" + Discourse.get("count"));
 	      } else {
 		t.arvostelu = undefined;
+		console.log("kolmas" + Discourse.get("count"));
 	      }
             }
 	    t.posters.forEach(function(p) {
