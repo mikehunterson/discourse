@@ -105,6 +105,9 @@ registerUnbound('topic-link', function(topic) {
 	} else if ( logo == 'PartyPoker' ) {
 		logo = '<div id="party"></div>';
 		
+	} else if ( logo == 'RedKings' ) {
+		logo = '<div id="betsafe"></div>';
+		
 	} else {
 		logo = '';
 	}
