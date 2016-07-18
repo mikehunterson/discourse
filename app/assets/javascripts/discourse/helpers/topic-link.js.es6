@@ -93,6 +93,18 @@ registerUnbound('topic-link', function(topic) {
 	} else if ( logo == 'Expekt' ) {
 		logo = '<div id="expekt"></div>';
 		
+	} else if ( logo == 'SekaBet (The Hive)' ) {
+		logo = '<div id="thehive"></div>';
+
+	} else if ( logo == 'Betsafe' ) {
+		logo = '<div id="dhoze"></div>';
+		
+	} else if ( logo == 'Bet-at-home' ) {
+		logo = '<div id="bethome"></div>';
+
+	} else if ( logo == 'PartyPoker' ) {
+		logo = '<div id="party"></div>';
+		
 	} else {
 		logo = '';
 	}

@@ -61,7 +61,27 @@ export default Ember.Controller.extend(SelectedPostsCount, BufferedContent, {
    }.property('model.slug'),
    
    tsek2: function(post){
- 	  return "http://www.bittipaja.com/t/" +this.get('model.slug') + "-kampanjat";
+     
+    if(this.get('model.slug') == '5dimes') { var id = 195; }
+    if(this.get('model.slug') == 'sekabet-enet') { var id = 171; }
+    if(this.get('model.slug') == 'sekabet-klas') { var id = 170; }
+    if(this.get('model.slug') == 'swc-poker') { var id = 167; }
+    if(this.get('model.slug') == 'sekabet-dollaro') { var id = 114; }
+    if(this.get('model.slug') == 'unibet') { var id = 109; }
+    if(this.get('model.slug') == 'sekabet-pokerdom') { var id = 103; }
+    if(this.get('model.slug') == 'betkings') { var id = 102; }
+    if(this.get('model.slug') == 'betsafe') { var id = 92; }
+    if(this.get('model.slug') == 'pkr-gaming') { var id = 89; }
+    if(this.get('model.slug') == 'intertops') { var id = 88; }
+    if(this.get('model.slug') == 'americascardroom') { var id = 86; }
+    if(this.get('model.slug') == 'betonline') { var id = 85; }
+    if(this.get('model.slug') == 'betcoin-poker') { var id = 84; }
+    if(this.get('model.slug') == 'the-hive') { var id = 210; }
+if (id != null) {
+ 	  return "http://www.bittipaja.com/t/" +this.get('model.slug') + "-kampanjat/" + id;
+} else {
+  return "http://www.bittipaja.com/t/" +this.get('model.slug') + "-kampanjat";
+}
    }.property('model.slug'),
 
   _titleChanged: function() {
