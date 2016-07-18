@@ -228,6 +228,9 @@ const TopicList = RestModel.extend({
       // Return a promise indicating no more results
       return Ember.RSVP.resolve();
     }
+    } else {
+      // Return a promise indicating no more results
+      return Ember.RSVP.resolve();
     }
   },
 
