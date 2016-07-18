@@ -11,6 +11,11 @@ export default Discourse.Route.extend(OpenComposer, {
   },
 
   beforeModel(transition) {
+Discourse.set('loadtopic', window.location.pathname);
+ 	if (Discourse.get('loadtopic').substring(0,3) != '/t/'){
+ 		Discourse.set('late', true);
+ 	}
+ 	this.transitionTo("/");
     if (transition.intent.url === "/" &&
         transition.targetName.indexOf("discovery.top") === -1 &&
         Discourse.User.currentProp("should_be_redirected_to_top")) {
@@ -29,7 +34,7 @@ export default Discourse.Route.extend(OpenComposer, {
     loadingComplete() {
       this.controllerFor("discovery").set("loading", false);
       if (!this.session.get("topicListScrollPosition")) {
-        scrollTop();
+        //scrollTop();
       }
     },
 

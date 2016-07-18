@@ -4,7 +4,7 @@ import CategoryList from "discourse/models/category-list";
 
 const DiscoveryCategoriesRoute = Discourse.Route.extend(OpenComposer, {
   renderTemplate() {
-    this.render("navigation/categories", { outlet: "navigation-bar" });
+    //this.render("navigation/categories", { outlet: "navigation-bar" });
     this.render("discovery/categories", { outlet: "list-container" });
   },
 
@@ -15,6 +15,7 @@ const DiscoveryCategoriesRoute = Discourse.Route.extend(OpenComposer, {
   model() {
     // TODO: Remove this and ensure server side does not supply `topic_list`
     // if default page is categories
+/*
     PreloadStore.remove("topic_list");
 
     return CategoryList.list(this.store, 'categories').then(list => {
@@ -25,6 +26,7 @@ const DiscoveryCategoriesRoute = Discourse.Route.extend(OpenComposer, {
       }
       return list;
     });
+*/
   },
 
   titleToken() {

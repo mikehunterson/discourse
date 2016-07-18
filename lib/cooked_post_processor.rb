@@ -17,7 +17,6 @@ class CookedPostProcessor
     @cooking_options = post.cooking_options || opts[:cooking_options] || {}
     @cooking_options[:topic_id] = post.topic_id
     @cooking_options = @cooking_options.symbolize_keys
-
     analyzer = post.post_analyzer
     @doc = Nokogiri::HTML::fragment(analyzer.cook(post.raw, @cooking_options))
     @has_oneboxes = analyzer.found_oneboxes?
@@ -203,6 +202,7 @@ class CookedPostProcessor
        original_width == 0 ||
        original_height == 0
       Rails.logger.info "Can't reach '#{src}' to get its dimension."
+
       return
     end
 

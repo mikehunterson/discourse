@@ -3,6 +3,8 @@ import { iconNode } from 'discourse/helpers/fa-icon';
 import { avatarImg } from 'discourse/widgets/post';
 import DiscourseURL from 'discourse/lib/url';
 import { wantsNewWindow } from 'discourse/lib/intercept-click';
+import RawHtml from 'discourse/widgets/raw-html';
+import Connector from 'discourse/widgets/connector';
 
 import { h } from 'virtual-dom';
 
@@ -87,7 +89,22 @@ createWidget('header-icons', {
   },
 
   html(attrs) {
-    const hamburger = this.attach('header-dropdown', {
+    
+
+    const search = this.attach('header-dropdown', {
+                     title: 'search.title',
+                     icon: 'search',
+                     iconId: 'search-button',
+                     action: 'toggleSearchMenu',
+                     active: attrs.searchVisible,
+                     href: '/search'
+                   });
+
+    const icons = [search];
+    if (this.currentUser) {
+
+	if (this.currentUser.get('staff')) {
+	icons.push(this.attach('header-dropdown', {
                         title: 'hamburger_menu',
                         icon: 'bars',
                         iconId: 'toggle-hamburger-menu',
@@ -102,21 +119,12 @@ createWidget('header-icons', {
                             className: 'badge-notification flagged-posts'
                           });
                         }
-                      });
+                      }));
+	}
 
-    const search = this.attach('header-dropdown', {
-                     title: 'search.title',
-                     icon: 'search',
-                     iconId: 'search-button',
-                     action: 'toggleSearchMenu',
-                     active: attrs.searchVisible,
-                     href: '/search'
-                   });
-
-    const icons = [search, hamburger];
-    if (this.currentUser) {
-      icons.push(this.attach('user-dropdown', { active: attrs.userVisible,
+	icons.push(this.attach('user-dropdown', { active: attrs.userVisible,
                                                 action: 'toggleUserMenu' }));
+      
     }
 
     return icons;
@@ -178,6 +186,19 @@ export default createWidget('header', {
     if (attrs.topic) {
       contents.push(this.attach('header-topic-info', attrs));
     }
+
+    
+/*
+    const tmp1 = new RawHtml({ html: `<div class="list-controls"><div class="container">` });
+    const tmp2 = new RawHtml({ html: `</div></div>` });
+
+    contents.push(tmp1);
+    //this.connect({ templateName: 'navigation.default' });
+ 
+    this.connect({ templateName: 'navigation.default' });
+
+    contents.push(tmp2);
+*/
 
     return h('div.wrap', h('div.contents.clearfix', contents));
   },

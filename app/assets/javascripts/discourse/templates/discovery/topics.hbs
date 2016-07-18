@@ -32,14 +32,29 @@
   {{/if}}
 
   {{#if hasTopics}}
+{{#if Discourse.late}}
+     	<div id="kalat"></div>
+     {{/if}}
+     
+     {{#unless Discourse.late}}
+   	  {{#if Discourse.arvost}}
+   		  <div id="kalat2"></div>
+   	  {{/if}}
+   	  {{#if Discourse.uutista}}
+   		  <div id="uutista"></div>
+   	  {{/if}}
+   	  {{#if Discourse.palsta}}
+   		  <div id="palsta"></div>
+   	  {{/if}}
+     {{/unless}}
       {{topic-list
           showTopicPostBadges=showTopicPostBadges
-          showPosters=true
+          showPosters=false
           currentUser=currentUser
           canBulkSelect=canBulkSelect
           changeSort="changeSort"
           toggleBulkSelect="toggleBulkSelect"
-          hideCategory=model.hideCategory
+          hideCategory=true
           order=order
           ascending=ascending
           bulkSelectEnabled=bulkSelectEnabled
@@ -51,7 +66,6 @@
 {{/discovery-topics-list}}
 
 <footer class='topic-list-bottom'>
-  {{conditional-loading-spinner condition=model.loadingMore}}
   {{#if allLoaded}}
     {{#if showDismissRead}}
       <button title="{{i18n 'topics.bulk.dismiss_tooltip'}}" id='dismiss-topics' class='btn dismiss-read' {{action "dismissReadPosts"}}>{{i18n 'topics.bulk.dismiss_button'}}</button>
@@ -65,8 +79,11 @@
         {{{footerEducation}}}
       </div>
       <h3>
+<!--
         {{footerMessage}}
+
         {{#if canCreateTopicOnCategory}}<a href {{action "createTopic"}}>{{i18n 'topic.suggest_create_topic'}}</a>{{/if}}
+-->
       </h3>
     {{else}}
       {{#if top}}
@@ -75,12 +92,14 @@
         {{top-period-buttons period=period action="changePeriod"}}
         </h3>
       {{else}}
+	<!--
         <div class="education">
             {{{footerEducation}}}
         </div>
         <h3>
           {{footerMessage}}{{#link-to "discovery.categories"}} {{i18n 'topic.browse_all_categories'}}{{/link-to}} {{i18n 'or'}} {{#link-to 'discovery.latest'}}{{i18n 'topic.view_latest_topics'}}{{/link-to}}
         </h3>
+	-->
       {{/if}}
     {{/if}}
   {{/if}}

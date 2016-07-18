@@ -24,13 +24,14 @@ export default class PostCooked {
   }
 
   init() {
-    const $html = $(`<div class='cooked'>${this.attrs.cooked}</div>`);
+    const $html = $(`<div class='cooked'><base target="_blank">${this.attrs.cooked}</div>`);
     this._insertQuoteControls($html);
     this._showLinkCounts($html);
     this._fixImageSizes($html);
     this._applySearchHighlight($html);
 
     _decorators.forEach(cb => cb($html, this.getModel));
+
     return $html[0];
   }
 

@@ -146,55 +146,66 @@ function showReplyTab(attrs, siteSettings) {
 createWidget('post-meta-data', {
   tagName: 'div.topic-meta-data',
   html(attrs) {
-    const result = [this.attach('poster-name', attrs)];
+    
+	    const result = [];
 
-    if (attrs.isWhisper) {
-      result.push(h('div.post-info.whisper', {
-        attributes: { title: I18n.t('post.whisper') },
-      }, iconNode('eye-slash')));
-    }
+	    if (attrs.firstPost) {
+		if (!$("body").hasClass("category-uutiset")){
+			result.push(this.attach('poster-name', attrs));	
+		}
+	    } else {
+		result.push(this.attach('poster-name', attrs));	
+	    }
 
-    const createdAt = new Date(attrs.created_at);
-    if (createdAt) {
-      result.push(h('div.post-info',
-        h('a.post-date', {
-          attributes: {
-            href: attrs.shareUrl,
-            'data-share-url': attrs.shareUrl,
-            'data-post-number': attrs.post_number,
-            'data-post-id': attrs.id,
-          }
-        }, dateNode(createdAt))
-      ));
-    }
+	    if (attrs.isWhisper) {
+	      result.push(h('div.post-info.whisper', {
+		attributes: { title: I18n.t('post.whisper') },
+	      }, iconNode('eye-slash')));
+	    }
 
-    if (attrs.via_email) {
-      result.push(this.attach('post-email-indicator', attrs));
-    }
+	    const createdAt = new Date(attrs.created_at);
+	    if (createdAt) {
+	     if (!$("body").hasClass("category-pokeriverkot")) {
+	      result.push(h('div.post-info',
+		h('a.post-date', {
+		  attributes: {
+		    href: attrs.shareUrl,
+		    'data-share-url': attrs.shareUrl,
+		    'data-post-number': attrs.post_number,
+		    'data-post-id': attrs.id,
+		  }
+		}, dateNode(createdAt))
+	      ));
+	     }
+	    }
 
-    if (attrs.version > 1) {
-      result.push(this.attach('post-edits-indicator', attrs));
-    }
+	    if (attrs.via_email) {
+	      result.push(this.attach('post-email-indicator', attrs));
+	    }
 
-    if (attrs.wiki) {
-      result.push(this.attach('wiki-edit-button', attrs));
-    }
+	    if (attrs.version > 1) {
+	      result.push(this.attach('post-edits-indicator', attrs));
+	    }
 
-    if (attrs.multiSelect) {
-      result.push(this.attach('select-post', attrs));
-    }
+	    if (attrs.wiki) {
+	      result.push(this.attach('wiki-edit-button', attrs));
+	    }
 
-    if (showReplyTab(attrs, this.siteSettings)) {
-      result.push(this.attach('reply-to-tab', attrs));
-    }
+	    if (attrs.multiSelect) {
+	      result.push(this.attach('select-post', attrs));
+	    }
 
-    result.push(h('div.read-state', {
-      className: attrs.read ? 'read' : null,
-      attributes: {
-        title: I18n.t('post.unread')
-      }
-    }, iconNode('circle')));
+	    if (showReplyTab(attrs, this.siteSettings)) {
+	      result.push(this.attach('reply-to-tab', attrs));
+	    }
 
+	    result.push(h('div.read-state', {
+	      className: attrs.read ? 'read' : null,
+	      attributes: {
+		title: I18n.t('post.unread')
+	      }
+	    }, iconNode('circle')));
+    
     return result;
   }
 });
@@ -301,8 +312,15 @@ createWidget('post-body', {
 
   html(attrs) {
     const postContents = this.attach('post-contents', attrs);
-    const result = [this.attach('post-meta-data', attrs), postContents];
+    const result = [postContents];
 
+	if (attrs.firstPost) {
+	    if (!$("body").hasClass("category-pokeriverkot")){
+		result.unshift(this.attach('post-meta-data', attrs));
+	    }
+	} else {
+		result.unshift(this.attach('post-meta-data', attrs));
+	}
     result.push(this.attach('actions-summary', attrs));
     result.push(this.attach('post-links', attrs));
     if (attrs.showTopicMap) {
@@ -342,8 +360,16 @@ createWidget('post-article', {
       const replies = state.repliesAbove.map(p => this.attach('embedded-post', p, { state: { above: true } }));
       rows.push(h('div.row', h('section.embedded-posts.top.topic-body.offset2', replies)));
     }
-
-    rows.push(h('div.row', [this.attach('post-avatar', attrs), this.attach('post-body', attrs)]));
+console.log(attrs);
+    if (attrs.firstPost) {
+	    if ($("body").hasClass("category-pokeriverkot") || $("body").hasClass("category-uutiset") || $("body").hasClass("category-kampanjat")) {
+		rows.push(h('div.row', [this.attach('post-body', attrs)]));
+	    } else {
+		rows.push(h('div.row', [this.attach('post-avatar', attrs), this.attach('post-body', attrs)]));
+	    }
+    } else {
+	rows.push(h('div.row', [this.attach('post-avatar', attrs), this.attach('post-body', attrs)]));
+    }
     return rows;
   },
 

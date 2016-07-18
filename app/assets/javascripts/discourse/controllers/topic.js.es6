@@ -9,6 +9,8 @@ import Composer from 'discourse/models/composer';
 import DiscourseURL from 'discourse/lib/url';
 import { categoryBadgeHTML } from 'discourse/helpers/category-link';
 
+import { filterQueryParams, findTopicList } from 'discourse/routes/build-topic-route';
+
 export default Ember.Controller.extend(SelectedPostsCount, BufferedContent, {
   needs: ['modal', 'composer', 'quote-button', 'application'],
   multiSelect: false,
@@ -42,6 +44,25 @@ export default Ember.Controller.extend(SelectedPostsCount, BufferedContent, {
     'jumpBottom',
     'replyToPost'
   ],
+
+ welcometopic: function(){
+ var loadtopic = Discourse.get('loadtopic');
+   if (loadtopic != "/" & loadtopic.substring(0,3) != "/la"){
+   } else {
+ 		Discourse.set('late',true);
+ 		DiscourseURL.routeTo(loadtopic);
+ 		//DiscourseURL.routeTo(loadtopic);
+ 		//Discourse.set('loadtopic', '');
+   }
+   }.property(),
+   
+   tsek: function(post){
+ 	  return this.get('model.slug') + "banner";
+   }.property('model.slug'),
+   
+   tsek2: function(post){
+ 	  return "http://www.bittipaja.com/t/" +this.get('model.slug') + "-kampanjat";
+   }.property('model.slug'),
 
   _titleChanged: function() {
     const title = this.get('model.title');

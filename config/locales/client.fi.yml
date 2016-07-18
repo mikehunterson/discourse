@@ -1670,10 +1670,10 @@ fi:
     replies: "Vastauksia"
     views_long: "tätä ketjua on katseltu {{number}} kertaa"
     activity: "Toiminta"
-    likes: "Tykkäykset"
+    likes: "Tykkää"
     likes_lowercase:
       one: "tykkäys"
-      other: "tykkäykset"
+      other: "tykkää"
     likes_long: "tässä ketjussa on {{number}} tykkäystä"
     users: "Käyttäjät"
     users_lowercase:

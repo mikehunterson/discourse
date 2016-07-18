@@ -150,6 +150,17 @@ const ApplicationRoute = Discourse.Route.extend(OpenComposer, {
       });
     },
 
+	tarkistapassu() {
+     	var passu = document.getElementById("salasana").value;
+     	if (passu == 'Strömsö' || passu == 'strömsö') {
+     		Discourse.set('privaatti', true);
+     		Discourse.set('tarvitaanpassu', undefined);
+     		updatenavs();
+     	} else {
+     	  alert("Antamasi salasana oli väärin.");
+     	}
+     },
+
     deleteSpammer(user) {
       this.send('closeModal');
       user.deleteAsSpammer(function() { window.location.reload(); });

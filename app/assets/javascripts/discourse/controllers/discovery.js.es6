@@ -1,8 +1,25 @@
 import DiscourseURL from 'discourse/lib/url';
+import Topic from 'discourse/models/topic';
 
 export default Ember.Controller.extend({
   needs: ['navigation/category', 'discovery/topics', 'application'],
   loading: false,
+
+queryParams: ["loadtopic1"],
+   loadtopic: "",
+   
+   welcometopic: function(){
+ 	var loadtopic = Discourse.get('loadtopic');
+ 	
+ 	if (loadtopic != '/'){
+ 		if (loadtopic.substring(0,3) != "/t/" ){
+ 			DiscourseURL.routeTo("/");
+ 		} else {
+ 			DiscourseURL.routeTo(loadtopic);
+ 			Discourse.set('loadtopic', undefined);
+ 		}
+ 	}
+   }.property(),
 
   category: Em.computed.alias('controllers.navigation/category.category'),
   noSubcategories: Em.computed.alias('controllers.navigation/category.noSubcategories'),

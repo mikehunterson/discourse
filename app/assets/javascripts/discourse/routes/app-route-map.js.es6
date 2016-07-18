@@ -4,6 +4,9 @@ export default function() {
 
   this.resource('about', { path: '/about' });
 
+
+this.resource('discovery', { path: '/' }, function() {
+
   // Topic routes
   this.resource('topic', { path: '/t/:slug/:id' }, function() {
     this.route('fromParams', { path: '/' });
@@ -12,7 +15,6 @@ export default function() {
   this.resource('topicBySlug', { path: '/t/:slug' });
   this.route('topicUnsubscribe', { path: '/t/:slug/:id/unsubscribe' });
 
-  this.resource('discovery', { path: '/' }, function() {
     // top
     this.route('top');
     this.route('topParentCategory', { path: '/c/:slug/l/top' });

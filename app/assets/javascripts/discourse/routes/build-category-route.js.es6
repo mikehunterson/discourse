@@ -32,6 +32,41 @@ export default (filter, params) => {
         return;
       }
 
+	if (model.category.get("name") == "Uutiset") {
+     		Discourse.set('uutista', true);
+		
+     	} else {
+     		Discourse.set('uutista', undefined);
+     	}
+
+     	if (model.category.get("name") == "Kampanjat") {
+     		Discourse.set('kamppikset', true);
+     	} else {
+     		Discourse.set('kamppikset', undefined);
+     	}
+
+     	if (model.category.get("name") == "Keskustelupalsta") {
+     		Discourse.set('palsta', true);
+     	} else {
+     		Discourse.set('palsta', undefined);
+     	}
+
+        if (model.category.get("name") == "Pokeriverkot") {
+     		Discourse.set('arvost', true);
+     	} else {
+     		Discourse.set('arvost', undefined);
+     	}
+
+
+     	if (model.name == "Vedonlyönti") {
+     		Discourse.set('vedonlyonti', true);
+     	} else {
+     		Discourse.set('vedonlyonti', undefined);
+     	}
+
+       Discourse.set('late', undefined);
+      $("#list-area").removeClass("stick5");
+
       this._setupNavigation(model.category);
       return Em.RSVP.all([this._createSubcategoryList(model.category),
                           this._retrieveTopicList(model.category, transition)]);
@@ -113,18 +148,18 @@ export default (filter, params) => {
 
       this.controllerFor('discovery/topics').setProperties(topicOpts);
       this.searchService.set('searchContext', category.get('searchContext'));
-      this.set('topics', null);
+      //this.set('topics', null);
 
       this.openTopicDraft(topics);
     },
 
     renderTemplate() {
-      this.render('navigation/category', { outlet: 'navigation-bar' });
+      //this.render('navigation/category', { outlet: 'navigation-bar' });
 
       if (this._categoryList) {
         this.render('discovery/categories', { outlet: 'header-list-container', model: this._categoryList });
       }
-      this.render('discovery/topics', { controller: 'discovery/topics', outlet: 'list-container' });
+      this.render('topic');
     },
 
     resetController(controller, isExiting) {

@@ -571,7 +571,7 @@ fi:
       xaxis: "Päivä"
       yaxis: "Uusien viestien lukumäärä"
     likes:
-      title: "Tykkäyksiä"
+      title: "Tykkää"
       xaxis: "Päivä"
       yaxis: "Uusien tykkäysten lukumäärä"
     flags:

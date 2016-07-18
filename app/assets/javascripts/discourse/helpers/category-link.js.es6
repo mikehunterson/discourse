@@ -72,6 +72,7 @@ export function categoryBadgeHTML(category, opts) {
     href = " href='" + href + "' ";
   }
 
+
   extraClasses = Discourse.SiteSettings.category_style ? Discourse.SiteSettings.category_style + extraClasses : extraClasses;
 
   return "<" + tagName + " class='badge-wrapper " + extraClasses + "' " + href + ">" + html + "</" + tagName + ">";

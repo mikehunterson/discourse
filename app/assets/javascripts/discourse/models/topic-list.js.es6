@@ -3,24 +3,162 @@ import Model from 'discourse/models/model';
 
 function topicsFrom(result, store) {
   if (!result) { return; }
-
+if (result.filter == "latest") { 
+ 		Discourse.set('late', true); 
+ 		Discourse.set('topiclistcas', undefined);
+ 	}
   // Stitch together our side loaded data
   const categories = Discourse.Category.list(),
         users = Model.extractByKey(result.users, Discourse.User);
 
-  return result.topic_list.topics.map(function (t) {
-    t.category = categories.findBy('id', t.category_id);
-    t.posters.forEach(function(p) {
-      p.user = users[p.user_id];
-    });
-    if (t.participants) {
-      t.participants.forEach(function(p) {
-        p.user = users[p.user_id];
+  var games = 0, news = 0, blogs = 0;
+ var size = 0, key;
+     for (key in result.topic_list.topics) {
+         if (result.topic_list.topics.hasOwnProperty(key)) size++;
+	}
+
+if (result.filter == 'c/pokeriverkot/l/latest') {
+    Discourse.set('count', 0);
+    Discourse.set('reviewcount', 0);
+    return result.topic_list.topics.map(function (t) {
+            t.category = categories.findBy('id', t.category_id);
+            t.arvostelu = true;
+            if (t.category_id == 5 && t.closed != true){
+              Discourse.set('count', Discourse.get('count') + 1);
+              if (Discourse.get('reviewcount') == 2){
+                Discourse.set('games3nimi', t.fancy_title);
+                Discourse.set('games3linkki', t.slug);
+                if ( t.id == undefined ){ Discourse.set('games3id', ""); } else { Discourse.set('games3id', t.id); }
+                Discourse.set('reviewcount', Discourse.get('reviewcount') + 1);
+              }
+              if (Discourse.get('reviewcount') == 1){
+                Discourse.set('games2nimi', t.fancy_title);
+                Discourse.set('games2linkki', t.slug);
+                if ( t.id == undefined ){ Discourse.set('games2id', ""); } else { Discourse.set('games2id', t.id); }
+                Discourse.set('reviewcount', Discourse.get('reviewcount') + 1);
+              }
+              if (Discourse.get('reviewcount') == 0){
+                Discourse.set('games1nimi', t.fancy_title);
+                Discourse.set('games1linkki', t.slug);
+                if ( t.id == undefined ){ Discourse.set('games1id', ""); } else { Discourse.set('games1id', t.id); }
+                Discourse.set('reviewcount', Discourse.get('reviewcount') + 1);
+              }
+            }
+            if (t.slug == 'dhoze' && Discourse.get('orig') == 'late') { t.arvostelu = undefined; }
+            if (Discourse.get('count') > 9 && Discourse.get('orig') == 'late') { t.arvostelu = undefined; }
+            t.posters.forEach(function(p) {
+              p.user = users[p.user_id];
+            });
+            if (t.participants) {
+              t.participants.forEach(function(p) {
+              p.user = users[p.user_id];
+              });
+            }
+            return store.createRecord('topic', t);
       });
-    }
-    return store.createRecord('topic', t);
-  });
+  } else if (result.filter == 'c/uutiset/l/latest') {
+    Discourse.set('newscount', 0);
+    return result.topic_list.topics.map(function (t) {
+            t.category = categories.findBy('id', t.category_id);
+              t.arvostelu = true;
+            if (t.category_id == 6 && t.closed != true){
+              if (Discourse.get('newscount') == 3){
+                Discourse.set('news4linkki', t.slug);
+                Discourse.set('newscount', Discourse.get('newscount') + 1);
+              }
+              if (Discourse.get('newscount') == 2){
+                Discourse.set('news3nimi', t.fancy_title);
+                Discourse.set('news3linkki', t.slug);
+                if ( t.id == undefined ){ Discourse.set('news3id', ""); } else { Discourse.set('news3id', t.id); }
+                Discourse.set('newscount', Discourse.get('newscount') + 1);
+              }
+              if (Discourse.get('newscount') == 1){
+                Discourse.set('news2nimi', t.fancy_title);
+                Discourse.set('news2linkki', t.slug);
+                if ( t.id == undefined ){ Discourse.set('news2id', ""); } else { Discourse.set('news2id', t.id); }
+                Discourse.set('newscount', Discourse.get('newscount') + 1);
+              }
+              if (Discourse.get('newscount') == 0){
+                Discourse.set('news1nimi', t.fancy_title);
+                Discourse.set('news1linkki', t.slug);
+                if ( t.id == undefined ){ Discourse.set('news1id', ""); } else { Discourse.set('news1id', t.id); }
+                Discourse.set('newscount', Discourse.get('newscount') + 1);
+              }
+            }
+            t.posters.forEach(function(p) {
+              p.user = users[p.user_id];
+            });
+            if (t.participants) {
+              t.participants.forEach(function(p) {
+              p.user = users[p.user_id];
+              });
+            }
+            return store.createRecord('topic', t);
+      });
+  } else if (result.filter == 'c/keskustelupalsta/l/latest') {
+    Discourse.set('forumcount', 0);
+    return result.topic_list.topics.map(function (t) {
+            t.category = categories.findBy('id', t.category_id);
+              t.arvostelu = true;
+            if (t.category_id == 7 && t.closed != true){
+              if (Discourse.get('forumcount') == 2){
+                Discourse.set('blogs3nimi', t.fancy_title);
+                Discourse.set('blogs3linkki', t.slug);
+                if ( t.id == undefined ){ Discourse.set('blogs3id', ""); } else { Discourse.set('blogs3id', t.id); }
+                
+                Discourse.set('forumcount', Discourse.get('forumcount') + 1);
+              }
+              if (Discourse.get('forumcount') == 1){
+                Discourse.set('blogs2nimi', t.fancy_title);
+                Discourse.set('blogs2linkki', t.slug);
+                if ( t.id == undefined ){ Discourse.set('blogs2id', ""); } else { Discourse.set('blogs2id', t.id); }
+                Discourse.set('forumcount', Discourse.get('forumcount') + 1);
+              }
+              if (Discourse.get('forumcount') == 0){
+                Discourse.set('blogs1nimi', t.fancy_title);
+                Discourse.set('blogs1linkki', t.slug);
+                if ( t.id == undefined ){ Discourse.set('blogs1id', ""); } else { Discourse.set('blogs1id', t.id); }
+                Discourse.set('forumcount', Discourse.get('forumcount') + 1);
+              }
+            }
+            t.posters.forEach(function(p) {
+              p.user = users[p.user_id];
+            });
+            if (t.participants) {
+              t.participants.forEach(function(p) {
+              p.user = users[p.user_id];
+              });
+            }
+            return store.createRecord('topic', t);
+      });
+  } else {
+    Discourse.set('count', 0);
+    return result.topic_list.topics.map(function (t) {
+      
+	    t.category = categories.findBy('id', t.category_id);
+      	    if (Discourse.get('orig') == 'late' && t.category_id != 5) { 
+              t.arvostelu = undefined;
+            } else {
+              Discourse.set('count', Discourse.get('count') + 1);
+	      if (Discourse.get("count") < 11) {
+              	t.arvostelu = true;
+	      } else {
+		t.arvostelu = undefined;
+	      }
+            }
+	    t.posters.forEach(function(p) {
+	      p.user = users[p.user_id];
+	    });
+	    if (t.participants) {
+	      t.participants.forEach(function(p) {
+		p.user = users[p.user_id];
+	      });
+	    }
+	    return store.createRecord('topic', t);
+	  });
+  }
 }
+
 
 const TopicList = RestModel.extend({
   canLoadMore: Em.computed.notEmpty("more_topics_url"),
@@ -116,6 +254,7 @@ const TopicList = RestModel.extend({
 TopicList.reopenClass({
 
   munge(json, store) {
+    console.log(json);
     json.inserted = json.inserted || [];
     json.can_create_topic = json.topic_list.can_create_topic;
     json.more_topics_url = json.topic_list.more_topics_url;
@@ -124,8 +263,28 @@ TopicList.reopenClass({
     json.draft = json.topic_list.draft;
     json.for_period = json.topic_list.for_period;
     json.loaded = true;
-    json.per_page = json.topic_list.per_page;
-    json.topics = topicsFrom(json, store);
+    if (json.filter == 'latest') {
+       Discourse.set('orig', 'late');
+ 
+       
+       json.filter = 'c/uutiset/l/latest';
+       topicsFrom(json, store);
+       json.filter = 'c/keskustelupalsta/l/latest';
+       topicsFrom(json, store);
+       json.filter = 'c/pokeriverkot/l/latest';
+       topicsFrom(json, store);
+       
+       json.filter = 'latest';
+     } else {
+        Discourse.set('orig', undefined);
+      }
+     if (json.filter == 'c/keskustelupalsta/l/latest') {
+     	json.topics = topicsFrom(json, store);
+     	json.per_page = json.topic_list.per_page;
+    } else {
+     	json.topics = topicsFrom(json, store).sortBy('created_at').reverse();
+     	json.per_page = 100;
+     }
 
     return json;
   },

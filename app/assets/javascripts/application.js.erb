@@ -6,6 +6,7 @@ require_asset ("./main_include.js")
 DiscoursePluginRegistry.javascripts.each { |js| require_asset(js) }
 DiscoursePluginRegistry.handlebars.each { |hb| require_asset(hb) }
 
+
 DiscoursePluginRegistry.each_globbed_asset do |f, ext|
   if File.directory?(f)
     depend_on(f)

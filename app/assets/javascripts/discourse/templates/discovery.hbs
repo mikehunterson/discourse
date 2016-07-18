@@ -2,15 +2,13 @@
   {{discourse-banner user=currentUser banner=site.banner}}
 </div>
 
-<div class="list-controls">
-  <div class="container">
-    {{outlet "navigation-bar"}}
-  </div>
-</div>
+{{#if currentUser.staff}}
+	 {{d-button class="btn-default edit-category" action="editCategory" actionParam=category icon="wrench" label="category.edit_long"}}
+{{/if}}
+<div id="bettinglist"></div>
 
-{{conditional-loading-spinner condition=loading}}
 
-<div class="container list-container {{if loading "hidden"}}">
+<div class="container list-container topikkilista">
   <div class="row">
     <div class="full-width">
       <div id="header-list-area">
@@ -22,10 +20,191 @@
     <div class="full-width">
       <div id="list-area">
         {{plugin-outlet "discovery-list-container-top"}}
-        {{outlet "list-container"}}
+        {{render "discovery.topics"}}
       </div>
     </div>
   </div>
 </div>
 
-{{plugin-outlet "discovery-below"}}
+{{#if Discourse.gambling}}
+   <div id="gambling-nav"></div>
+ {{/if}}
+ 
+ {{#unless Discourse.late}}
+ 	<div id="topikkiview" class="topikkiview">
+ 		{{render "topic"}}
+ 	</div>
+ {{else}}
+  {{welcometopic}}
+ 	<div id="topikkiview" class="topikkiview">
+ 	  <script>
+   			updatenavs();
+   			updatenews();
+  		</script>
+ 	  <div id="tabs">
+ 		  <ul>
+ 		    <li><a href="#tabs-1">Uutiset</a></li>
+ 		    <li><a href="#tabs-2">Kampanjat</a></li>
+ 		    <li style="margin-left: 20px;"><a href="#tabs-3">Privaattikampanjat</a></li>
+ 		  </ul>
+ 		  <div id="tabs-1">
+     		<div>
+     		  <a id="linkki1" href="" style="color:black;">
+       			<div id="uutinen1" class="uutinen" style="height:180px;">
+       				<div id="kuva1">
+       				</div>
+       				<div id="teksti1"> 
+       					<h2></h2>
+       					<p></p>
+       				</div>
+       			</div>
+     			</a>
+     			<a id="linkki2" href="" style="color:black;">
+       			<div id="uutinen2" class="uutinen" style="height:180px;">
+       				<div id="kuva2">
+      				</div>
+       				<div id="teksti2"> 
+       					<h2></h2>
+       					<p></p>
+       				</div>
+       			</div>
+     			</a>
+    			<a id="linkki3" href="" style="color:black;">
+       			<div id="uutinen3" class="uutinen" style="height:180px;">
+       				<div id="kuva3">
+       				</div>
+       				<div id="teksti3"> 
+       					<h2></h2>
+       					<p></p>
+       				</div>
+       			</div>
+     			</a>
+     			<a id="linkki4" href="" style="color:black;">
+       			<div id="uutinen4" class="uutinen" style="height:180px;">
+       				<div id="kuva4">
+       				</div>
+       				<div id="teksti4"> 
+       					<h2></h2>
+       					<p></p>
+       				</div>
+       			</div>
+       		</a>
+     		</div>
+     	</div>
+     	
+     	
+     <div id="tabs-2">
+       <div>
+     		  <a id="klinkki1" href="" style="color:black;">
+       			<div id="kuutinen1" class="kuutinen" style="height:180px;">
+       				<div id="kkuva1">
+      				</div>
+       				<div id="kteksti1"> 
+       					<h2></h2>
+       					<p></p>
+       				</div>
+       			</div>
+     			</a>
+     			<a id="klinkki2" href="" style="color:black;">
+       			<div id="kuutinen2" class="kuutinen" style="height:180px;">
+       				<div id="kkuva2">
+       				</div>
+       				<div id="kteksti2"> 
+       					<h2></h2>
+       					<p></p>
+       				</div>
+       			</div>
+     			</a>
+     			<a id="klinkki3" href="" style="color:black;">
+       			<div id="kuutinen3" class="kuutinen" style="height:180px;">
+       				<div id="kkuva3">
+       				</div>
+       				<div id="kteksti3"> 
+       					<h2></h2>
+       					<p></p>
+       				</div>
+       			</div>
+     			</a>
+     			<a id="klinkki4" href="" style="color:black;">
+       			<div id="kuutinen4" class="kuutinen" style="height:180px;">
+       				<div id="kkuva4">
+       				</div>
+       				<div id="kteksti4"> 
+       					<h2></h2>
+       					<p></p>
+       				</div>
+       			</div>
+       		</a>
+     		</div>
+     </div>
+     
+     <div id="tabs-3">
+       <div>
+         {{#unless Discourse.privaatti}}
+ 				<div class="pwkysyminen">
+ 				  <p></p>
+ 				</div>
+ 				Salasana: <input type="text" id="salasana" name="salasana"><br>
+ 				{{d-button label="ok" action="tarkistapassu"}}
+   			{{else}}
+   			<script>
+     			updatenavs();
+     		</script>
+     				<div>
+       		  <a id="plinkki1" href="" style="color:black;">
+         			<div id="puutinen1" class="puutinen" style="height:180px;">
+         				<div id="pkuva1">
+         				</div>
+         				<div id="pteksti1"> 
+         					<h2></h2>
+         					<p></p>
+         				</div>
+         			</div>
+       			</a>
+       			<a id="plinkki2" href="" style="color:black;">
+         			<div id="puutinen2" class="puutinen" style="height:180px;">
+         				<div id="pkuva2">
+         				</div>
+         				<div id="pteksti2"> 
+         					<h2></h2>
+         					<p></p>
+         				</div>
+         			</div>
+       			</a>
+       			<a id="plinkki3" href="" style="color:black;">
+         			<div id="puutinen3" class="puutinen" style="height:180px;">
+         				<div id="pkuva3">
+         				</div>
+         				<div id="pteksti3"> 
+         					<h2></h2>
+         					<p></p>
+         				</div>
+        			</div>
+       			</a>
+       			<a id="plinkki4" href="" style="color:black;">
+         			<div id="puutinen4" class="puutinen" style="height:180px;">
+         				<div id="pkuva4">
+         				</div>
+         				<div id="pteksti4"> 
+         					<h2></h2>
+         					<p></p>
+         				</div>
+         			</div>
+         		</a>
+       		</div>
+       		<script>
+     			updatenavs();
+     		</script>
+   			{{/unless}}
+         
+       </div>
+     </div>
+     
+     
+   </div>
+ 	</div>
+ {{/unless}}
+ 
+ <script>
+ $(window).trigger( "scroll" );
+ </script>

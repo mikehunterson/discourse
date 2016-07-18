@@ -47,6 +47,17 @@ const Topic = RestModel.extend({
   fancyTitle(title) {
     title = title || "";
     title = Discourse.Emoji.unescape(title);
+if (this.get('category_id') == 14 && Discourse.get('privaatti') != true){
+       Discourse.set('tarvitaanpassu', true);
+     }
+        if (this.get('category_id') == 5 || this.get('category_id') == 6 || this.get('category_id') == 8) { 
+ 		Discourse.set('hidetop', true); 
+ 	} else {
+		Discourse.set('hidetop', undefined); 
+	}
+ 	if (this.get('category_id') == 5) { 
+ 		this.set('hidetop2', true); 
+ 	}
     return Discourse.CensoredWords.censor(title);
   },
 

@@ -123,6 +123,7 @@ const DiscourseURL = Ember.Object.extend({
     }
 
     const oldPath = window.location.pathname;
+Discourse.set('vanha', oldPath);
     path = path.replace(/(https?\:)?\/\/[^\/]+/, '');
 
     // handle prefixes
@@ -288,10 +289,17 @@ const DiscourseURL = Ember.Object.extend({
 
     const router = this.get('router');
 
-    if (opts.replaceURL) {
-      this.replaceState(path);
-    } else {
-      router.router.updateURL(path);
+    if (path.substring(0,3) == "/c/") {
+     	Em.run.next(function() {
+     		    const location = DiscourseURL.get('router.location');
+             location.replaceURL(Discourse.get('vanha'));
+     	});
+      } else {
+       if (opts.replaceURL) {
+ 	      this.replaceState(path);
+ 	    } else {
+ 	      router.router.updateURL(path);
+ 	    }
     }
 
     const split = path.split('#');

@@ -1,4 +1,5 @@
 import DiscourseURL from 'discourse/lib/url';
+import { queryParams } from 'discourse/controllers/discovery-sortable';
 
 let isTransitioning = false,
     scheduledReplace = null,
@@ -16,6 +17,18 @@ const TopicRoute = Discourse.Route.extend({
     username_filters: { replace: true },
     show_deleted: { replace: true }
   },
+
+
+beforeModel(transition) {
+ 	const model = this.modelFor('topic');
+   	if (!model) { 
+   		//this.transitionTo("/"); 
+   	}
+   },
+   
+   afterModel(transition){
+ 	  Discourse.set('late', undefined);
+   },
 
   titleToken() {
     const model = this.modelFor('topic');
@@ -112,6 +125,18 @@ const TopicRoute = Discourse.Route.extend({
 
     didTransition() {
       this.controllerFor("topic")._showFooter();
+if (Discourse.get('topiclistcas') == undefined) {
+       	if (this.modelFor('topic').category_id == 5) { 
+             		DiscourseURL.routeTo('/c/pokeriverkot');
+       	} else if (this.modelFor('topic').category_id == 6) { 
+             		DiscourseURL.routeTo('/c/uutiset');
+       	} else if (this.modelFor('topic').category_id == 7) { 
+             		DiscourseURL.routeTo('/c/keskustelupalsta');
+       	} else {
+       	        DiscourseURL.routeTo('/c/pokeriverkot');
+       	}
+       	Discourse.set('topiclistcas', true);
+       }	
       return true;
     },
 

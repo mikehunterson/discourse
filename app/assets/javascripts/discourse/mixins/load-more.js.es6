@@ -20,7 +20,9 @@ export default Ember.Mixin.create(Ember.ViewTargetActionSupport, Scrolling, {
   _bindEyeline() {
     const eyeline = new Eyeline(this.get('eyelineSelector') + ":last");
     this.set('eyeline', eyeline);
-    eyeline.on('sawBottom', () => this.send('loadMore'));
+    if (Discourse.late != true){
+       eyeline.on('sawBottom', () => this.send('loadMore'));
+     }
     this.bindScrolling();
   },
 

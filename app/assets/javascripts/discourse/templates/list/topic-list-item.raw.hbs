@@ -1,8 +1,19 @@
+{{#if topic.arvostelu}}
 {{#if bulkSelectEnabled}}
   <td class='star'>
     <input type="checkbox" class="bulk-select">
   </td>
 {{/if}}
+
+
+{{#if controller.showLikes}}
+ <td class="num likes">
+   {{#if hasLikes}}
+   <a href='{{topic.summaryUrl}}'>
+     {{number topic.like_count}} <i class='fa fa-heart'></i></td>
+   </a>
+   {{/if}}
+ {{/if}}
 
 <td class='main-link clearfix' colspan="{{titleColSpan}}">
   {{raw "topic-status" topic=topic}}
@@ -50,6 +61,7 @@
   {{/if}}
 {{/if}}
 
+<!--
 {{#if showOpLikes}}
 <td class="num likes">
   {{#if hasOpLikes}}
@@ -58,7 +70,8 @@
     </a>
   {{/if}}
 {{/if}}
-
 <td class="num views {{topic.viewsHeat}}">{{number topic.views numberKey="views_long"}}</td>
 
 {{raw "list/activity-column" topic=topic class="num" tagName="td"}}
+-->
+{{/if}}

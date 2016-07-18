@@ -33,7 +33,7 @@ function findTopicList(store, tracking, filter, filterParams, extras) {
       session.set('topicList', null);
     } else {
       // Clear the cache
-      session.setProperties({topicList: null, topicListScrollPosition: null});
+      session.setProperties({topicList: session.topicList, topicListScrollPosition: session.topicListScrollPosition});
     }
 
     // Clean up any string parameters that might slip through

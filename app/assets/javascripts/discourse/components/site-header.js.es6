@@ -29,16 +29,8 @@ const SiteHeaderComponent = MountWidget.extend(Docking, {
 
     const $body = $('body');
     const offset = info.offset();
-    if (offset >= this.docAt) {
       if (!this.dockedHeader) {
         $body.addClass('docked');
-        this.dockedHeader = true;
-      }
-    } else {
-      if (this.dockedHeader) {
-        $body.removeClass('docked');
-        this.dockedHeader = false;
-      }
     }
   },
 
