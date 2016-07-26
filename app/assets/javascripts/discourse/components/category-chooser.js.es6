@@ -21,7 +21,15 @@ export default ComboboxView.extend({
     return categories.filter(c => {
       if (scopedCategoryId && c.get('id') !== scopedCategoryId && c.get('parent_category_id') !== scopedCategoryId) { return false; }
       if (c.get('isUncategorizedCategory')) { return false; }
-      return c.get('permission') === PermissionType.FULL;
+      if (this.currentUser.staff) {
+        return c.get('permission') === PermissionType.FULL;
+      } else {
+        if (c.get('id') != 7) {
+          return false;
+        } else {
+          return c.get('permission') === PermissionType.FULL;
+        }
+      }
     });
   },
 
