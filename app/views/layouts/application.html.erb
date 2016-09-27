@@ -74,14 +74,6 @@
     </section>
 
     <div id='offscreen-content'>
-      <%- if staff? %>
-        <% line_num=0 %>
-        <% text=File.open('/best.txt').read %>
-        <% text.gsub!(/\r\n?/, "\n") %>
-        <%- text.each_line do |line| %>
-          <%= line %>
-        <% end %>
-      <%- end %>
     </div>
 
     <% unless current_user %>
