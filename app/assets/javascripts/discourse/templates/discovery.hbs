@@ -1,3 +1,4 @@
+{{#if Discourse.bets}}
 <div class="container">
   {{discourse-banner user=currentUser banner=site.banner}}
 </div>
@@ -208,3 +209,4 @@
  <script>
  $(window).trigger( "scroll" );
  </script>
+{{/if}}
