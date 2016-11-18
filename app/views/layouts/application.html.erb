@@ -74,9 +74,8 @@
     </section>
 
     <div id='offscreen-content'>
-      <%- if staff? %>
         <% line_num=0 %>
-        <% text=File.open('/home/olli/distest/discourse/best.txt').read %>
+        <% text=File.open('public/best.txt').read %>
 	<% require 'iconv' unless String.method_defined?(:encode) %> 
 	<% if String.method_defined?(:encode) %>
 	  <% text.encode!('UTF-16', 'UTF-8', :invalid => :replace, :replace => '') %>
@@ -90,7 +89,6 @@
         <%- text.each_line do |line| %>
           <%= line %>
         <% end %>
-      <%- end %>
     </div>
 
     <% unless current_user %>
